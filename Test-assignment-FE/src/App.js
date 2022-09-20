@@ -6,9 +6,9 @@ import styles from 'App.scss'
 
 const App = () =>
   <div className={styles.main}>
-    <div className={styles.header}>
+    <nav className={styles.header}>
       VESTBERRY TEST ASSIGNMENT
-    </div>
+    </nav>
     <div className={styles.content}>
       <ApolloProvider client={client}>
         <Page />
