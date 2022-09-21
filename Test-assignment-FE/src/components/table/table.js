@@ -2,9 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledTable = styled.table`
-  width:100%;
-  padding: 2%;
-  
+    width: 95%;
+  border-collapse: collapse; 
 `
 const StyledTh = styled.th`
   padding: 2%;
@@ -15,19 +14,21 @@ const StyledTr = styled.tr`
   padding: 2%;
 `
 const StyledTrBody = styled.tr`
+  width: 90%;
   background-color: rgb(255,255,255);
+  border-bottom: 1px solid black;
   text-align: left;
   padding: 2%;
 `
 const StyledTd = styled.td`
-  padding: 2%;
+  padding: 3%;
 `
 const StyledButton = styled.button`
   padding: 17%;
   white-space: nowrap;
   `
 const StyledThead = styled.thead`
-  border-bottom: 4px solid black;
+  border-bottom: 1px solid black;
 `
 const StyledTfootButton = styled.tfoot`
     display: flex;
@@ -35,42 +36,48 @@ const StyledTfootButton = styled.tfoot`
   `
 const StyledTBody = styled.tbody`
   `
-
+const StyledSection = styled.section`
+    width:100%;
+  padding: 2%;
+  `
 const buttonLabel = 'Add new company'
 
 const Table = (props) => {
   const initiaState = {
     data: props.companies,
-    mapping: {'COMPANY NAME': 'name', 'STAGE': 'stage', 'SECTOR': 'sector', 'INVESTMENT SIZE': 'investmentSize'}
+    mapping: { 'COMPANY NAME': 'name', 'STAGE': 'stage', 'SECTOR': 'sector', 'INVESTMENT SIZE': 'investmentSize' }
   }
 
   return (
-    <StyledTable>
-      <StyledThead>
-        <StyledTr>
-          {Object.keys(initiaState.mapping).map((name, i) => {
-            return <StyledTh key={i}>{name}</StyledTh>
-          })}
-        </StyledTr>
-      </StyledThead>
-      <StyledTBody>
-        {initiaState.data.map((company, i) => (
-          <StyledTrBody key={i}>
-            {Object.values(initiaState.mapping).map((value, index) => {
-              return <StyledTd key={index}>{company[value]}</StyledTd>
+    <StyledSection>
+      <StyledTable>
+        <StyledThead>
+          <StyledTr>
+            {Object.keys(initiaState.mapping).map((name, i) => {
+              return <StyledTh key={i}>{name}</StyledTh>
             })}
-          </StyledTrBody>
-        ))}
+          </StyledTr>
+        </StyledThead>
+        <StyledTBody>
+          {initiaState.data.map((company, i) => (
+            <StyledTrBody key={i}>
+              {Object.values(initiaState.mapping).map((value, index) => {
+                return <StyledTd key={index}>{company[value]}</StyledTd>
+              })}
+            </StyledTrBody>
+          ))}
 
-      </StyledTBody>
-      <StyledTfootButton>
-        <StyledTr>
-          <StyledTd>
-            <StyledButton>{buttonLabel} </StyledButton>
-          </StyledTd>
-        </StyledTr>
-      </StyledTfootButton>
-    </StyledTable>
+        </StyledTBody>
+        <StyledTfootButton>
+          <StyledTr>
+            <StyledTd>
+              <StyledButton>{buttonLabel} </StyledButton>
+            </StyledTd>
+          </StyledTr>
+        </StyledTfootButton>
+      </StyledTable>
+    </StyledSection>
+
   )
 }
 
