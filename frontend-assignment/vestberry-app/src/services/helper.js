@@ -4,18 +4,23 @@ import Roboadvisory from "../assets/roboadvisory.svg";
 import IOT from "../assets/iot.svg";
 
 export const getInvestmentSize = (data) => {
-  let array = data.map(e => {
-    return { key: e.name, data: e.investmentSize };
-  });
-  return array;
+  if (data !== undefined) {
+    let array = data.map(e => {
+      return { key:  `${e.name}`, data: parseInt(e.investmentSize) };
+    });
+    console.log(array)
+    return array;
+  } else return []
 };
 
 export const getProp = (value) => {
-  const output = value.reduce((obj, itm) => {
-    obj[itm.sector] = obj[itm.sector] + 1 || 1;
-    return obj;
-  }, {});
-  return Object.keys(output).map(e => ({ key: e, value: output[e] }));
+  if (value !== undefined) {
+    const output = value.reduce((obj, itm) => {
+      obj[itm.sector] = obj[itm.sector] + 1 || 1;
+      return obj;
+    }, {});
+    return Object.keys(output).map(e => ({ key: e, value: output[e] }));
+  } else return []
 };
 
 export const getImage = (props) => {

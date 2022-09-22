@@ -137,8 +137,6 @@ const Modal = ({ setIsOpen,addTodo }: any) => {
   const [investmentSize, setInvestmentSize] = useState(0);
   const [local, setLocal] = useState(true);
 
- 
-
   const handleName = (e: any) => {
     setCompanyName(e.target.value);
   };

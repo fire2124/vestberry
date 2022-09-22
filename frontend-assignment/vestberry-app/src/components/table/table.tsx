@@ -115,80 +115,83 @@ const Table = (props: any) => {
           </StyledTrGray>
         </StyledThead>
         <StyledTBody>
-          {props.companies.map((row: any, i: number) => {
-            if (row.id % 2 === 0)
-              return (
-                <StyledTrBlack key={row.id}>
-                  {Object.keys(props.main.headerAttr).map(
-                    (e: any, index: number) => {
-                      switch (e) {
-                        case "COMPANY NAME":
-                          return (
-                            <CompanyName key={index}>
-                              {row[props.main.headerAttr[e]]}
-                            </CompanyName>
-                          );
+          {props.companies &&
+            props.companies.map((row: any, i: number) => {
+              if (row.id % 2 === 0)
+                return (
+                  <StyledTrBlack key={row.id}>
+                    {Object.keys(props.main.headerAttr).map(
+                      (e: any, index: number) => {
+                        switch (e) {
+                          case "COMPANY NAME":
+                            return (
+                              <CompanyName key={index}>
+                                {row[props.main.headerAttr[e]]}
+                              </CompanyName>
+                            );
 
-                        case "INVESTMENT SIZE":
-                          return (
-                            <StyledTd key={index}>
-                              {row[props.main.headerAttr[e]].toLocaleString()} {currency}
-                            </StyledTd>
-                          );
-                        case "SECTOR":
-                          return (
-                            <StyledTdSECTOR key={index}>
-                              {row[props.main.headerAttr[e]]}
-                            </StyledTdSECTOR>
-                          );
-                        default:
-                          return (
-                            <StyledTdDefault key={index}>
-                              {row[props.main.headerAttr[e]]}
-                            </StyledTdDefault>
-                          );
+                          case "INVESTMENT SIZE":
+                            return (
+                              <StyledTd key={index}>
+                                {row[props.main.headerAttr[e]].toLocaleString()}{" "}
+                                {currency}
+                              </StyledTd>
+                            );
+                          case "SECTOR":
+                            return (
+                              <StyledTdSECTOR key={index}>
+                                {row[props.main.headerAttr[e]]}
+                              </StyledTdSECTOR>
+                            );
+                          default:
+                            return (
+                              <StyledTdDefault key={index}>
+                                {row[props.main.headerAttr[e]]}
+                              </StyledTdDefault>
+                            );
+                        }
                       }
-                    }
-                  )}
-                </StyledTrBlack>
-              );
-            else
-              return (
-                <StyledTrGray key={row.id}>
-                  {Object.keys(props.main.headerAttr).map(
-                    (e: any, index: number) => {
-                      switch (e) {
-                        case "COMPANY NAME":
-                          return (
-                            <CompanyName key={index}>
-                              {row[props.main.headerAttr[e]]}
-                            </CompanyName>
-                          );
+                    )}
+                  </StyledTrBlack>
+                );
+              else
+                return (
+                  <StyledTrGray key={row.id}>
+                    {Object.keys(props.main.headerAttr).map(
+                      (e: any, index: number) => {
+                        switch (e) {
+                          case "COMPANY NAME":
+                            return (
+                              <CompanyName key={index}>
+                                {row[props.main.headerAttr[e]]}
+                              </CompanyName>
+                            );
 
-                        case "INVESTMENT SIZE":
-                          return (
-                            <StyledTd key={index}>
-                              {row[props.main.headerAttr[e]].toLocaleString()} {currency}
-                            </StyledTd>
-                          );
-                        case "SECTOR":
-                          return (
-                            <StyledTdSECTOR key={index}>
-                              {row[props.main.headerAttr[e]]}
-                            </StyledTdSECTOR>
-                          );
-                        default:
-                          return (
-                            <StyledTdDefault key={index}>
-                              {row[props.main.headerAttr[e]]}
-                            </StyledTdDefault>
-                          );
+                          case "INVESTMENT SIZE":
+                            return (
+                              <StyledTd key={index}>
+                                {row[props.main.headerAttr[e]].toLocaleString()}{" "}
+                                {currency}
+                              </StyledTd>
+                            );
+                          case "SECTOR":
+                            return (
+                              <StyledTdSECTOR key={index}>
+                                {row[props.main.headerAttr[e]]}
+                              </StyledTdSECTOR>
+                            );
+                          default:
+                            return (
+                              <StyledTdDefault key={index}>
+                                {row[props.main.headerAttr[e]]}
+                              </StyledTdDefault>
+                            );
+                        }
                       }
-                    }
-                  )}
-                </StyledTrGray>
-              );
-          })}
+                    )}
+                  </StyledTrGray>
+                );
+            })}
         </StyledTBody>
       </StyledTable>
     </StyledSection>

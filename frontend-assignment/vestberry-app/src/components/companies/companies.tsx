@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { PieChart, PieArcSeries } from "reaviz";
 import { schemeDark2 } from "d3-scale-chromatic";
 import { getInvestmentSize } from "../../services/helper";
+import { useEffect, useState } from "react";
 
 const Background = styled.section`
   display: flex;
@@ -90,47 +91,49 @@ const scompaniesLabel = "Companies by investment size";
 const label = "Companies";
 
 const Companies = (props: any) => {
-  const data = getInvestmentSize(props.companies);
-  return (
-    <Background>
-      <StyledDiv>
-        <StyledH2>{scompaniesLabel}</StyledH2>
-      </StyledDiv>
-      <Flex>
-        <StyledBox>
-          <StyledPieChart>
-            <PieChart
-              width={250}
-              height={350}
-              data={data}
-              series={
-                <PieArcSeries
-                  doughnut={true}
-                  label={null}
-                  colorScheme="Dark2"
-                />
-              }
-            />
-          </StyledPieChart>
-          <ChartLabelDiv>
-            <StyledPGraph>{data.length}</StyledPGraph>
-            <StyledPText> {label}</StyledPText>
-          </ChartLabelDiv>
-        </StyledBox>
-        <Legend>
-          {props.companies.map((company: any, i: number) => {
-            //Note: color are valid for max 8 colors, because of the Dark2 Color pallet
-            return (
-              <Item key={i}>
-                <Dot theme={schemeDark2[i]}></Dot>
-                <StyledP>{company.name}</StyledP>
-              </Item>
-            );
-          })}
-        </Legend>
-      </Flex>
-    </Background>
-  );
+  const [data, setData] = useState(getInvestmentSize(props.companies));
+
+    return (
+      <Background>
+        <StyledDiv>
+          <StyledH2>{scompaniesLabel}</StyledH2>
+        </StyledDiv>
+        <Flex>
+          <StyledBox>
+            <StyledPieChart>
+              <PieChart
+                width={250}
+                height={350}
+                data={data}
+                series={
+                  <PieArcSeries
+                    doughnut={true}
+                    label={null}
+                    colorScheme={"Dark2"}
+                  />
+                }
+              />
+            </StyledPieChart>
+            <ChartLabelDiv>
+              <StyledPGraph>{data.length}</StyledPGraph>
+              <StyledPText> {label}</StyledPText>
+            </ChartLabelDiv>
+          </StyledBox>
+          <Legend>
+            {props.companies &&
+              props.companies.map((company: any, i: number) => {
+                //Note: color are valid for max 8 colors, because of the Dark2 Color pallet
+                return (
+                  <Item key={i}>
+                    <Dot theme={schemeDark2[i]}></Dot>
+                    <StyledP>{company.name}</StyledP>
+                  </Item>
+                );
+              })}
+          </Legend>
+        </Flex>
+      </Background>
+    );
 };
 
 export default Companies;

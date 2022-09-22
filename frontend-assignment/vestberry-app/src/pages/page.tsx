@@ -4,7 +4,6 @@ import {
   ADD_COMPANY,
   REMOVE_COMPANY,
 } from "../services/appoloQueries";
-import Mutation from 'graphql-tag'
 import { useQuery, useMutation } from "@apollo/client";
 import Table from "../components/table/table";
 import Companies from "../components/companies/companies";
@@ -67,85 +66,66 @@ const Page = () => {
     { data: dataRemove, loading: loadingRemove, error: errorRemove },
   ] = useMutation(REMOVE_COMPANY);
 
-  // useEffect(() => {
-  //   try {
-  //     if (companyData !== undefined) {
-  //       setMain({ ...initialState, data: companyData.companies });
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  if (loading) {
-    return <span>Loading data...</span>;
+  if (loading || loadingAddedData || loadingRemove) {
+    console.log(loading || loadingAddedData || loadingRemove)
+    return <StyledButton>Loading data...</StyledButton>;
   }
 
-  if (error) {
+  if (error || errorRemove || errorAdding ) {
     return (
       <span>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
+        <pre>{JSON.stringify(error || errorRemove || errorAdding, null, 2)}</pre>
       </span>
     );
   }
 
-  if (loadingRemove) {
-    console.log("Deleting...");
-    return <span>Deleting...</span>;
-  }
-  if (errorRemove) console.log(`Submission error! ${errorRemove.message}`);
-  if (dataRemove) console.log(dataRemove);
+  if (dataRemove || addedData || companyData) {
 
-  if (loadingAddedData) {
-    return <span>Submitting...</span>;
-  }
-  if (errorAdding) console.log(`Submission error! ${errorAdding.message}`);
-  if (addedData && addedData.addCompany) {
-    // const value = [...main.data,addedData.addCompany]
-    console.log(addedData);
-    // setMain({ ...initialState, data: addedData.addCompany });
-  }
-
-  return (
-    // <Mutation
-    //   mutation={ADD_COMPANY}
-    //   update={(cache:any, { data: { addCompany }}:any) => {
-    //     const { companies } = cache.readQuery({ query: GET_COMPANIES });
-    //     cache.writeQuery({
-    //       query: GET_COMPANIES,
-    //       data: { companies: companies.concat([addCompany]) },
-    //     });
-    //   }}
-    // >
+    const getData = ()=>{
+      if(dataRemove !== undefined) {
+        return dataRemove.companies
+      }
+      if(addedData !== undefined) {
+        const array = companyData.companies.concat([addedData.addCompany] )
+        return array
+      }
+      if(companyData !== undefined) {
+        return companyData.companies
+      }
+    }
+    const data = getData()
+    if(addedData)window.location.reload();
+    
+    return(
       <Background>
-        <Sectors companies={companyData.companies} />
-        <Companies companies={companyData.companies} />
-        <Table companies={companyData.companies} main={main} />
-        {isOpen && (
-          <Modal
-            setIsOpen={setIsOpen}
-            companies={companyData.companies}
-            addTodo={addCompany}
-          />
-        )}
-        <StyledDivButton>
-          {companyData.companies.length >= 0 ? (
-            <StyledButton
-              onClick={() =>
-                remove({ variables: companyData.length })
-              }
-            >
-              {"delete"}{" "}
-            </StyledButton>
-          ) : null}
-          <StyledButton onClick={() => setIsOpen(true)}>
-            {buttonLabel}{" "}
+      <Sectors companies={data} />
+      <Companies companies={data} />
+      <Table companies={data} main={main} />
+      {isOpen && (
+        <Modal
+          setIsOpen={setIsOpen}
+          companies={data}
+          addTodo={addCompany}
+        />
+      )}
+      <StyledDivButton>
+        {data !== undefined && data.length >= 8 ? (
+          <StyledButton
+            onClick={() =>
+              remove({ variables: companyData.length })
+            }
+          >
+            {"delete"}
           </StyledButton>
-        </StyledDivButton>
-      </Background>
-    // </Mutation>
-  );
+        ) : null}
+        <StyledButton onClick={() => setIsOpen(true)}>
+          {buttonLabel}
+        </StyledButton>
+      </StyledDivButton>
+    </Background>
+    )
+  }
+  return null
 };
 
 export default Page;
