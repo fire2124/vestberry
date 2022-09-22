@@ -20,3 +20,10 @@ export const ADD_COMPANY = gql`
       investmentSize
     }
   }`
+
+  export const REMOVE_COMPANY = gql`
+  mutation REMOVE_COMPANY ($id: Int!) {
+    deleteCompany(id: $id) {
+      id
+    }
+  }`

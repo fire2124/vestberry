@@ -1,0 +1,34 @@
+.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  background-color: #141518;
+  color: #aaaaaa;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background: #141518 !important;
+  font-family: "Be Vietnam Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: #aaaaaa;
+}
+
+div#demo-simple-select {
+    background: #141518;
+    /* appearance: none; */
+    background-position-x: 96%;
+    width: 102.7%;
+    color: #aaaaaa;
+    border-radius: 4px;
+    font-family: "Be Vietnam Pro";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+}
+
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+    color: #aaaaaa !important;
+}
