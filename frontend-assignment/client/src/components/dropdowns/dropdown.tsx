@@ -59,11 +59,6 @@ const StyledP = styled.p`
   margin-left: 2%;
 `;
 
-
-
-
-
-
 const Dropdown = (props: any) => {
   const [local, setLocal] = useState(true);
 

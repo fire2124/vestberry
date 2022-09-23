@@ -3,13 +3,13 @@ import styled, {createGlobalStyle, ThemeProvider} from 'styled-components'
 import theme from '@client/theme'
 import {ReactComponent as LogoSvg} from '@assets/vestberry-logo.svg'
 
-import client from '@client/apollo'
+import client from '@client/src/services/apollo'
 import Page from '@client/Page'
 
 const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
-    padding: 0;
+    padding-bottom: 5%;
     color: ${theme.colors.text};
     font-size: 14px;
     font-family: 'Be Vietnam Pro', sans-serif;

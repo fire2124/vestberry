@@ -3,6 +3,7 @@ import styled from "styled-components";
 import X from "../../assets/X.svg";
 import Dropdown from "../dropdowns/dropdown";
 import Input from "../input/input";
+import { checkForOccurences } from "../../services/helper";
 
 const Background = styled.div`
   background: none;
@@ -130,7 +131,7 @@ const headerText =
 const addButton = "Add Company";
 const cancelButton = "Cancel";
 
-const Modal = ({ setIsOpen,addTodo }: any) => {
+const Modal = ({ setIsOpen, addTodo, companies }: any) => {
   const [companyName, setCompanyName] = useState("");
   const [stage, setStage] = useState("");
   const [sector, setSector] = useState("");
@@ -156,7 +157,9 @@ const Modal = ({ setIsOpen,addTodo }: any) => {
       companyName.length > 0 &&
       sector.length > 0 &&
       stage.length > 0 &&
-      investmentSize > 0
+      investmentSize > 0 &&
+      // to eliminate companies which are the same
+      checkForOccurences(companies, companyName) === companies.length
     ) {
       const value = {
         name: companyName,

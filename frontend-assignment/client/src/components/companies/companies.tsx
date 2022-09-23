@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { PieChart, PieArcSeries } from "reaviz";
 import { schemeDark2 } from "d3-scale-chromatic";
-import { getInvestmentSize } from "../../services/helper";
+import { getInvestmentSize, getLegend } from "../../services/helper";
 import { useEffect, useState } from "react";
 
 const Background = styled.section`
@@ -93,47 +93,53 @@ const label = "Companies";
 const Companies = (props: any) => {
   const [data, setData] = useState(getInvestmentSize(props.companies));
 
-    return (
-      <Background>
-        <StyledDiv>
-          <StyledH2>{scompaniesLabel}</StyledH2>
-        </StyledDiv>
-        <Flex>
-          <StyledBox>
-            <StyledPieChart>
-              <PieChart
-                width={250}
-                height={350}
-                data={data}
-                series={
-                  <PieArcSeries
-                    doughnut={true}
-                    label={null}
-                    colorScheme={"Dark2"}
-                  />
-                }
-              />
-            </StyledPieChart>
-            <ChartLabelDiv>
-              <StyledPGraph>{data.length}</StyledPGraph>
-              <StyledPText> {label}</StyledPText>
-            </ChartLabelDiv>
-          </StyledBox>
-          <Legend>
-            {props.companies &&
-              props.companies.map((company: any, i: number) => {
-                //Note: color are valid for max 8 colors, because of the Dark2 Color pallet
+  useEffect(() => {
+    setData(getInvestmentSize(props.companies));
+  }, []);
+  return (
+    <Background>
+      <StyledDiv>
+        <StyledH2>{scompaniesLabel}</StyledH2>
+      </StyledDiv>
+      <Flex>
+        <StyledBox>
+          <StyledPieChart>
+            {/*Note: Donute graph need as key to start with UpperCase*/}
+            <PieChart
+              width={250}
+              height={350}
+              data={data}
+              series={
+                <PieArcSeries
+                  doughnut={true}
+                  label={null}
+                  colorScheme={"Dark2"}
+                />
+              }
+            />
+          </StyledPieChart>
+          <ChartLabelDiv>
+            <StyledPGraph>{data.length}</StyledPGraph>
+            <StyledPText> {label}</StyledPText>
+          </ChartLabelDiv>
+        </StyledBox>
+        <Legend>
+          {props.companies &&
+            getLegend(props.companies, schemeDark2).map(
+              (company: any, i: number) => {
+                //Note: color are valid for max 8 colors, because of the Dark2 Color pallet -> then starting from 0
                 return (
                   <Item key={i}>
-                    <Dot theme={schemeDark2[i]}></Dot>
-                    <StyledP>{company.name}</StyledP>
+                    <Dot theme={company.color}></Dot>
+                    <StyledP>{company.label}</StyledP>
                   </Item>
                 );
-              })}
-          </Legend>
-        </Flex>
-      </Background>
-    );
+              }
+            )}
+        </Legend>
+      </Flex>
+    </Background>
+  );
 };
 
 export default Companies;

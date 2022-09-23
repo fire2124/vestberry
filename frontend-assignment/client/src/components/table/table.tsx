@@ -119,7 +119,7 @@ const Table = (props: any) => {
             props.companies.map((row: any, i: number) => {
               if (row.id % 2 === 0)
                 return (
-                  <StyledTrBlack key={row.id}>
+                  <StyledTrBlack key={i}>
                     {Object.keys(props.main.headerAttr).map(
                       (e: any, index: number) => {
                         switch (e) {
@@ -156,7 +156,7 @@ const Table = (props: any) => {
                 );
               else
                 return (
-                  <StyledTrGray key={row.id}>
+                  <StyledTrGray key={i}>
                     {Object.keys(props.main.headerAttr).map(
                       (e: any, index: number) => {
                         switch (e) {
