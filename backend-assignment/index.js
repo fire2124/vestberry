@@ -1,40 +1,40 @@
-import express from 'express'
-import {graphqlHTTP} from 'express-graphql'
-import {makeExecutableSchema} from 'graphql-tools'
+const {ApolloServer} = require('apollo-server-express')
+const {ApolloServerPluginDrainHttpServer} = require('apollo-server-core')
+const express = require('express')
+const http = require('http')
+const {typeDefs} = require('./schemas/schema')
+const {Query} = require('./resolvers/Query')
+const {Mutation} = require('./resolvers/mutation')
+const {getAuthorized} = require('./services/helper')
+require('dotenv').config()
 
-const app = express()
+const {Sequelize} = require('sequelize')
 
-const RootQuery = `
-  type RootQuery {
-    hello: String!
-  }
-`
-
-const SchemaDefinition = `
-  schema {
-    query: RootQuery
-  }
-`
-
-const schema = makeExecutableSchema({
-  typeDefs: [SchemaDefinition, RootQuery],
-  resolvers: {
-    RootQuery: {
-      hello: () => 'world',
-    }
-  }
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: 'localhost',
+  dialect: 'mysql'
 })
 
-app.use('/graphql', graphqlHTTP({
-  schema,
-  graphiql: true,
-}))
+async function startApolloServer () {
+  const app = express()
+  const httpServer = http.createServer(app)
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers: {
+      Query,
+      Mutation
+    },
+    context:{
+      sequelize,
+      getAuthorized
+    },
+    plugins: [ApolloServerPluginDrainHttpServer({httpServer})],
+  })
 
-const host = process.env.host || 'localhost'
-const port = process.env.port || 8000
+  await server.start()
+  server.applyMiddleware({app})
+  await new Promise(resolve => httpServer.listen({port: 4000}, resolve))
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+}
 
-app.listen(port, host, () => {
-  console.debug(`Server is running at http://${host}:${port}`)
-})
-
-export default app
+startApolloServer()

@@ -58,3 +58,16 @@ While developing, you will probably rely mostly on `yarn start`; however, there 
 |`start`                |Serves your app at `localhost:8000`|
 |`lint`                 |[Lints](http://stackoverflow.com/questions/8503559/what-is-linting) the project for potential errors|
 |`lint:fix`             |Lints the project and [fixes all correctable errors](http://eslint.org/docs/user-guide/command-line-interface.html#fix)|
+
+## Used
+### 1. for authentification
+https://www.npmjs.com/package/jwt-encode
+https://www.mitrais.com/news-updates/graphql-server-authorization-with-jwt/
+### 2. for GraphQL
+https://www.apollographql.com/docs/apollo-server/
+https://graphql.org/code/#javascript
+### 3. for DB
+https://github.com/cvburgess/SQLDataSource
+https://www.npmjs.com/package/mysql
+
+

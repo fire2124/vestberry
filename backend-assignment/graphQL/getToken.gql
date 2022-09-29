@@ -1,0 +1,14 @@
+query {
+    getToken(email: "filip.reichl@gmail.com", password: "hello_world") {
+        token
+        refreshToken
+    }
+
+    getStatuses(token: $token) {
+        status_id
+        status
+        updated_at
+        Book_isbn
+        Book_User_User_id
+    }
+}
