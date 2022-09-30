@@ -1,5 +1,6 @@
 const {ApolloServer} = require('apollo-server-express')
 const {ApolloServerPluginDrainHttpServer} = require('apollo-server-core')
+const {Sequelize} = require('sequelize')
 const express = require('express')
 const http = require('http')
 const {typeDefs} = require('./schemas/schema')
@@ -8,7 +9,6 @@ const {Mutation} = require('./resolvers/mutation')
 const {getAuthorized} = require('./services/helper')
 require('dotenv').config()
 
-const {Sequelize} = require('sequelize')
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: 'localhost',

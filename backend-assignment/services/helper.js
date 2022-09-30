@@ -28,7 +28,7 @@ const getAuthorized = (token) => {
     return {code:403, message:'Unauthorized _ Invalid_token'}
   }
   if (tokenParsed.payload && tokenParsed.payload.exp >= Date.now()) {
-    return {code:400, message:'Authorized', user:tokenParsed.payload}
+    return {code:200, message:'Authorized', user:tokenParsed.payload}
   } else return {code:403, message:'Unauthorized'}
 }
 

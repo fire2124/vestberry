@@ -9,12 +9,15 @@ exports.typeDefs = gql`
     type Query {
         hello: String
         getToken(email:String!, password: String!): TokenType!
-        getAllBooks(token:String!):[Book]!
-        getStatuses(token:String!):[Status]!
+        getNewToken(token:String!): TokenType!
+        getAllBooks(token:String!,limit:Int, offset: Int):[Book]!
+        getStatuses(token:String!,id:ID!):[Status]!
         getSpecificBooks(title:String, author:String):[BookAuthor]!
     }
     type Mutation{
         addBook(token:String!,book:addBookInput!):BookAuthor
+        updateBook(token:String!,book:addBookInput!):BookAuthor
+        removeBook(token:String!,id:ID!):String
     }
 
     type TokenType{
@@ -33,8 +36,12 @@ exports.typeDefs = gql`
         status_id: ID!
         status: String!
         updated_at: String!
-        Book_isbn: Int!
-        Book_User_User_id: Int
+        user: String!
+        isbn: Int!
+        title: String!
+        year: String!
+        genres: String!
+        rating: Int!
     }
 
     type CreatingBook{
