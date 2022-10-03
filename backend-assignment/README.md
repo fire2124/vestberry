@@ -4,27 +4,28 @@ Task is to create backend application in Node.js using any SQL database. This ap
 
 ## Use cases:
 
-* User should be able to log in.
-* User should be able to add new book, edit existing book, and delete book. User should be able to “travel back” in time and see older state of any book.
-* Anonymous user should be able to find some book by author name or book title.
-* Pagination is not required but is big plus.
+- User should be able to log in.
+- User should be able to add new book, edit existing book, and delete book. User should be able to “travel back” in time and see older state of any book.
+- Anonymous user should be able to find some book by author name or book title.
+- Pagination is not required but is big plus.
 
 ## Minimum data requirements:
 
-* User: email, password
-* Book: title, author, year of publication, genres, rating
+- User: email, password
+- Book: title, author, year of publication, genres, rating
 
 You can model SQL schema as you consider best. The same applies for GraphQL schema.
 
 ## Additional informations:
 
-* Feel free to use any additional library you might need for completing this project, or change structure or anything
-* We would like to see, how will you solve this task in terms of end result precision, code quality & readability
+- Feel free to use any additional library you might need for completing this project, or change structure or anything
+- We would like to see, how will you solve this task in terms of end result precision, code quality & readability
 
 ## Sample project Requirements
-* node `^10.7.0`
-* yarn `^1.9.2` or npm `^6.2.0`
-* babel-cli `^6.26.0`
+
+- node `^10.7.0`
+- yarn `^1.9.2` or npm `^6.2.0`
+- babel-cli `^6.26.0`
 
 ## Installation
 
@@ -53,21 +54,55 @@ After this you can open in your browser the GraphiQL at [http://localhost:8000/g
 
 While developing, you will probably rely mostly on `yarn start`; however, there are additional scripts at your disposal:
 
-|`yarn <script>`        |Description|
-|-----------------------|-----------|
-|`start`                |Serves your app at `localhost:8000`|
-|`lint`                 |[Lints](http://stackoverflow.com/questions/8503559/what-is-linting) the project for potential errors|
-|`lint:fix`             |Lints the project and [fixes all correctable errors](http://eslint.org/docs/user-guide/command-line-interface.html#fix)|
+| `yarn <script>` | Description                                                                                                             |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `start`         | Serves your app at `localhost:8000`                                                                                     |
+| `lint`          | [Lints](http://stackoverflow.com/questions/8503559/what-is-linting) the project for potential errors                    |
+| `lint:fix`      | Lints the project and [fixes all correctable errors](http://eslint.org/docs/user-guide/command-line-interface.html#fix) |
 
-## Used
-### 1. for authentification
+<p align="center">
+ <img width=300px height=300x src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1280px-Node.js_logo.svg.png" alt="NodeJS logo">
+<img width=300px height=300px src="https://upload.wikimedia.org/wikipedia/labs/8/8e/Mysql_logo.png" alt="MySQL logo">
+ <img width=584px height=400px src="https://graphql.org/img/og-image.png" alt="GraphQL logo">
+</p>
+
+
+## ✔️The most important Libraries✔️
+
+### 🔐 Authentification 🔑
+
 https://www.npmjs.com/package/jwt-encode
-https://www.mitrais.com/news-updates/graphql-server-authorization-with-jwt/
-### 2. for GraphQL
+https://www.npmjs.com/package/bcrypt
+
+### ⛏️ for GraphQL
+
 https://www.apollographql.com/docs/apollo-server/
 https://graphql.org/code/#javascript
-### 3. for DB
-https://github.com/cvburgess/SQLDataSource
-https://www.npmjs.com/package/mysql
 
+### 💽 for DB
 
+https://sequelize.org/
+https://www.npmjs.com/package/mysql2
+
+## ✔️ Use Cases functionality ✔️ 
+
+#### 1.User should be able to log in.
+
+MUTATION - createUser 🏃
+QUERY - getToken, getNewToken 🏃
+
+#### 2.User should be able to add new book, edit existing book, and delete book.
+
+MUTATION - addBook, updateBook, removeBook 📚
+
+#### 3.User should be able to “travel back” in time and see older state of any book.
+
+QUERY - getStatuses 📰
+
+#### 4.Anonymous user should be able to find some book by author name or book title.
+
+QUERY - getSpecificBooks 📚
+
+#### 5.Pagination is not required but is big plus.
+
+QUERY - getAllBooks 📚
