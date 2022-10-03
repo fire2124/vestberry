@@ -15,9 +15,10 @@ exports.typeDefs = gql`
         getSpecificBooks(title:String, author:String):[BookAuthor]!
     }
     type Mutation{
-        addBook(token:String!,book:addBookInput!):BookAuthor
-        updateBook(token:String!,book:addBookInput!):BookAuthor
+        addBook(token:String!,book:addBookInput!):ResponseBook
+        updateBook(token:String!,book:addBookInput!):ResponseBook
         removeBook(token:String!,id:ID!):String
+        createUser(user:userInput!):User!
     }
 
     type TokenType{
@@ -29,8 +30,7 @@ exports.typeDefs = gql`
         year: String!
         genres: String!
         rating: Int!
-        User_user_id: Int!
-        Author_author_id:Int!
+        author: String!
     }
     type Status{
         status_id: ID!
@@ -44,10 +44,9 @@ exports.typeDefs = gql`
         rating: Int!
     }
 
-    type CreatingBook{
-        status:Int
-        data: BookAuthor
-        error: String
+    type ResponseBook{
+        message: String
+        book: BookAuthor
     }
     type BookAuthor{
         isbn: ID!
@@ -57,7 +56,7 @@ exports.typeDefs = gql`
         rating: Int!
         author:String!
     }
-
+    
     input addBookInput{
         isbn: ID!
         title: String!
@@ -65,5 +64,17 @@ exports.typeDefs = gql`
         genres: String!
         rating: Int!
         author:String!
+    }
+    input userInput{
+        name: String!
+        email: String!
+        password: String!
+        role: String!
+    }
+    type User{
+        name: String!
+        email: String!
+        password: String!
+        role: String!
     }
 `
