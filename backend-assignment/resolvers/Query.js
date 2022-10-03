@@ -9,7 +9,7 @@ exports.Query = {
     try {
       const select = `select * from User_Table where email= "${args.email}"`
       const users = await context.sequelize.query(select, type)
-      const compared = bcrypt.compareSync(args.password, users[0].password)
+      const compared = bcrypt.compare(args.password, users[0].password)
       if (compared) {
         const token = getToken(users[0])
         const reftoken = getRefToken(users[0])

@@ -1,14 +1,127 @@
-query {
-    getToken(email: "filip.reichl@gmail.com", password: "hello_world") {
+query(){
+   getToken(email: "filip.reichl@gmail.com", password: "hello_world") {
         token
         refreshToken
     }
+}
 
-    getStatuses(token: $token) {
-        status_id
-        status
-        updated_at
-        Book_isbn
-        Book_User_User_id
+query GetNewToken($token: String!) {
+  getNewToken(token: $token) {
+    token
+    refreshToken
+  }
+}
+
+mutation Mutation($token: String!, $book: addBookInput!) {
+  addBook(token: $token, book: $book) {
+    message
+    book {
+      isbn
+      title
+      year
+      genres
+      rating
+      author
     }
+  }
+}
+
+mutation RemoveBook($token: String!, $removeBookId: ID!) {
+  removeBook(token: $token, id: $removeBookId)
+}
+
+
+query GetStatuses($token: String!, $limit: Int, $offset: Int) {
+  getAllBooks(token: $token, limit: $limit, offset: $offset) {
+    isbn
+    title
+    year
+    genres
+    rating
+    author
+  }
+}
+
+
+query GetSpecificBooks($title: String, $author: String) {
+  getSpecificBooks(title: "Pirates from Caribean", author: "Anonymus") {
+    isbn
+    title
+    year
+    genres
+    rating
+    author
+  }
+}
+
+mutation Mutation($token: String!, $book: addBookInput!) {
+  updateBook(token: $token, book: $book) {
+    book {
+      isbn
+      title
+      year
+      genres
+      rating
+      author
+    }
+    message
+  }
+  
+}
+
+
+
+query GetStatuses($token: String!, $id: ID!) {
+  getStatuses(token: $token, id: $id) {
+    status_id
+    status
+    user
+    updated_at
+    isbn
+    title
+    year
+    genres
+    rating
+  }
+}
+
+mutation CreateUser($user: userInput!) {
+  createUser(user: $user){
+    name
+    email
+    password
+    role
+  }
+}
+
+
+
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoiRmlsaXAgUmVpY2hsIiwiZW1haWwiOiJmaWxpcC5yZWljaGxAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMjAkclJ6dkt2Qnl2d2ZIb0NiVVlxRkxvZWlrY1VBWFcuVUoubGpHd280OGdBZE1rL3RDbGliQ1ciLCJyb2xlIjoiQWRtaW4iLCJ2YWxpZEZyb20iOjE2NjQ4MTU1MzA4NDgsImV4cCI6MTY2NDgxOTEzMDg0OCwiaWF0IjoxNjY0ODE1NTMwfQ.NC_LwCyHLSL2ORCgRocFna4VRNlwvU9qjARq19eA_LE",
+  "book": {
+    "isbn":6,
+    "title": "Pirates from Caribean",
+    "year":"2000",
+    "genres":"Action and Comedy",
+    "rating":10,
+    "author": "Anonymus"
+  },
+  "removeBookId": 6,
+  "id": 6,
+  "limit": 5,
+  "offset": 0,
+  "title": null,
+  "author": null,
+  "updateBookToken2": null,
+  "updateBookBook2": null,
+  "getStatusesToken2": null,
+  "getStatusesId": null,
+  "user": {
+    "name": "Filip Reichl",
+    "email": "filip.reichl@gmail.com",
+    "password": "hello_world",
+    "role": "Admin"
+  },
+  "createUserUser2": null
+
 }

@@ -14,7 +14,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mysql`.`Book` (
   `isbn` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NULL,
-  `year` YEAR(4) NULL,
+  `year` YEAR NULL,
   `genres` VARCHAR(45) NULL,
   `rating` VARCHAR(45) NULL,
   `Author_author_id` INT NOT NULL,
