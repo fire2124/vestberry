@@ -16,7 +16,7 @@ export const getInvestmentSize = (data: any) => {
   } else return [];
 };
 
-export const getProp = (value: any) => {
+export const getProperties = (value: any) => {
   //for sectors
   if (value !== undefined) {
     const output = value.reduce((obj: any, itm: any) => {
@@ -25,6 +25,26 @@ export const getProp = (value: any) => {
     }, {});
     return Object.keys(output).map((e) => ({ key: e, value: output[e] }));
   } else return [];
+};
+
+
+export const merge = (value: any, arrayOfStrings: String[]) => {
+  let getProp = getProperties(value) as any
+  let output = arrayOfStrings.map((string:String)=>{
+    const isFound = getProp.some((element:any) => {
+      if (element.key === string) {
+        return true;
+      }
+      return false;
+    });
+    return isFound
+  })
+  let array = output.map((e:boolean, index:number)=>{
+    if (e === false){
+      return {key:arrayOfStrings[index], value: 0}
+    }
+  }).concat(getProp).filter( val =>  val !== undefined)
+  return array
 };
 
 export const getImage = (props: any) => {

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Sector from "./sector";
-import { getProp } from "../../services/helper";
+import { getProperties } from "../../services/helper";
+import { useQuery } from "@apollo/client";
+import { GET_SECTORS } from "@client/src/services/graphql";
 
 const Background = styled.section`
   display: flex;
@@ -27,6 +29,11 @@ const StyledH2 = styled.h2`
 
 const sectorLabel = "Companies by sectors";
 
+interface SectorProp {
+  key: string;
+  value: number;
+}
+
 const Sectors = (props: any) => {
   return (
     <Background>
@@ -34,7 +41,7 @@ const Sectors = (props: any) => {
         <StyledH2>{sectorLabel}</StyledH2>
       </StyledDiv>
       <Flex>
-        {getProp(props.companies).map((value: Object, index:number) => {
+        {getProperties(props.companies).map((value: SectorProp, index: number) => {
           return <Sector key={index} sector={value} />;
         })}
       </Flex>

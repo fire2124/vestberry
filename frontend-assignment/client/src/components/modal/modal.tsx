@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import X from "../../assets/X.svg";
+
 import Dropdown from "../dropdowns/dropdown";
 import Input from "../input/input";
 import { checkForOccurences } from "../../services/helper";
@@ -15,12 +16,14 @@ const Background = styled.div`
   transform: translate(-50%, -50%);
   position: absolute;
 `;
+
 const Centered = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
 const StyledModal = styled.div`
   background: #141518;
   box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
@@ -131,12 +134,14 @@ const headerText =
 const addButton = "Add Company";
 const cancelButton = "Cancel";
 
-const Modal = ({ setIsOpen, addTodo, companies }: any) => {
+
+const Modal = ({ setIsOpen,setIsEmpty,setSuccess, addTodo, companies }: any) => {
   const [companyName, setCompanyName] = useState("");
   const [stage, setStage] = useState("");
   const [sector, setSector] = useState("");
   const [investmentSize, setInvestmentSize] = useState(0);
   const [local, setLocal] = useState(true);
+
 
   const handleName = (e: any) => {
     setCompanyName(e.target.value);
@@ -169,6 +174,9 @@ const Modal = ({ setIsOpen, addTodo, companies }: any) => {
       };
       addTodo({ variables: value });
       setIsOpen(false);
+      setSuccess(true)
+    } else {
+      setIsEmpty(true);
     }
   };
 

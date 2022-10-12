@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const StyledTable = styled.table`
   width: 76%;
-  margin-left: 9%;
   border-collapse: collapse;
 `;
 const StyledTh = styled.th`

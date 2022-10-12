@@ -2,12 +2,18 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import styled from "styled-components";
-import { GET_COMPANIES, CompanyType, ADD_COMPANY } from "@client/src/services/graphql";
+import {
+  GET_COMPANIES,
+  CompanyType,
+  ADD_COMPANY,
+} from "@client/src/services/graphql";
 
 import Table from "./src/components/table/table";
 import Companies from "./src/components/companies/companies";
 import Sectors from "./src/components/sectors/sectors";
 import Modal from "./src/components/modal/modal";
+import Error from "./src/components/notifications/error";
+import Success from "./src/components/notifications/success";
 
 const Background = styled.main`
   display: flex;
@@ -38,6 +44,8 @@ const StyledButton = styled.button`
 `;
 
 const buttonLabel = "Add new company";
+const emptyfield = "You need to fill all inputs";
+const successMessage = "Successfully added book";
 
 export function Page() {
   let initialState = {
@@ -51,6 +59,8 @@ export function Page() {
   };
   const [main, setMain] = useState(initialState as any);
   const [isOpen, setIsOpen] = useState(false);
+  const [empty, setIsEmpty] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const {
     loading,
@@ -67,11 +77,14 @@ export function Page() {
     return <StyledButton>Loading data...</StyledButton>;
   }
 
-  if (error || errorAdding) {
+  if (error) {
     return (
-      <span>
-        <pre>{JSON.stringify(error || errorAdding, null, 2)}</pre>
-      </span>
+      <Error status={error} function={setIsEmpty} />
+    );
+  }
+  if (errorAdding) {
+    return (
+      <Error status={errorAdding} function={setIsEmpty} />
     );
   }
 
@@ -86,26 +99,24 @@ export function Page() {
       }
     };
     const data = getData();
-    if (addedData) window.location.reload();
 
     return (
       <Background>
+        {empty ? <Error status={emptyfield} function={setIsEmpty} /> : null}
+        {success ? <Success status={successMessage} function={setSuccess} /> : null}
         <Sectors companies={data} />
         <Companies companies={data} />
         <Table companies={data} main={main} />
         {isOpen && (
-          <Modal setIsOpen={setIsOpen} companies={data} addTodo={addCompany} />
+          <Modal
+            setIsOpen={setIsOpen}
+            companies={data}
+            addTodo={addCompany}
+            setIsEmpty={setIsEmpty}
+            setSuccess={setSuccess}
+          />
         )}
         <StyledDivButton>
-          {/* {data !== undefined && data.length >= 8 ? (
-          <StyledButton
-            onClick={() =>
-              remove({ variables: companyData.length })
-            }
-          >
-            {"delete"}
-          </StyledButton>
-        ) : null} */}
           <StyledButton onClick={() => setIsOpen(true)}>
             {buttonLabel}
           </StyledButton>
