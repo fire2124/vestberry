@@ -8,8 +8,41 @@ const statuses = [
   {status: 'Deleted', method: 'deletingBook', type: QueryTypes.DELETE},
 ]
 const bcrypt = require('bcrypt')
+const {getToken, getRefToken} = require('../services/helper')
 
 exports.Mutation = {
+  getToken: async (parent, args, context) => {
+    try {
+      const select = `select * from User_Table where email= "${args.email}"`
+      const users = await context.sequelize.query(select, statuses[0].type)
+      const compared = bcrypt.compare(args.password, users[0].password)
+      if (compared) {
+        const token = getToken(users[0])
+        const reftoken = getRefToken(users[0])
+        return {token: token, refreshToken: reftoken}
+      } else {
+        throw new Error('Unregistered user')
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
+  getNewToken: async (parent, args, context) => {
+    try {
+      const authorized = context.getAuthorized(args.token)
+      const select = `select * from User_Table where name= "${authorized.user.name}"`
+      const users = await context.sequelize.query(select, statuses[0].type)
+      if (users.length > 0) {
+        const token = getToken(users[0])
+        const reftoken = getRefToken(users[0])
+        return {token: token, refreshToken: reftoken}
+      } else {
+        throw new Error('Unregistered user')
+      }
+    } catch (error) {
+      throw new Error(error)
+    }
+  },
   addBook: async (parent, args, context) => {
     const authorized = context.getAuthorized(args.token)
     if (authorized.code === 403) throw authorized
@@ -140,7 +173,7 @@ exports.Mutation = {
         type: statuses[0].type,
       })
       if (userExist[0].count === 1) throw new Error(`User with current email: ${args.user.email} already exist`)
-      const salt = await bcrypt.genSalt(20)
+      const salt = await bcrypt.genSalt(10)
       const password = await bcrypt.hash(args.user.password, salt)
       const user = {...args.user, password: password}
       const selectUser = `INSERT INTO User_Table (name,email,password,role) 

@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS `mysql`.`Book` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
--- CREATE TABLE IF NOT EXISTS `mysql`.`Author` (
---   `author_id` INT NOT NULL AUTO_INCREMENT,
---   `name` VARCHAR(45) NULL,
---   PRIMARY KEY (`author_id`),
---   UNIQUE INDEX `author_id_UNIQUE` (`author_id` ASC) VISIBLE)
--- ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `mysql`.`Author` (
+   `author_id` INT NOT NULL AUTO_INCREMENT,
+   `name` VARCHAR(45) NULL,
+   PRIMARY KEY (`author_id`),
+   UNIQUE INDEX `author_id_UNIQUE` (`author_id` ASC) VISIBLE)
+ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mysql`.`Status` (
   `status_id` INT NOT NULL AUTO_INCREMENT,

@@ -7,14 +7,13 @@ const {gql} = require('apollo-server-express')
 
 exports.typeDefs = gql`
     type Query {
-        hello: String
-        getToken(email:String!, password: String!): TokenType!
-        getNewToken(token:String!): TokenType!
         getAllBooks(token:String!,limit:Int, offset: Int):[Book]!
         getStatuses(token:String!,id:ID!):[Status]!
         getSpecificBooks(title:String, author:String):[BookAuthor]!
     }
     type Mutation{
+        getToken(email:String!, password: String!): TokenType!
+        getNewToken(token:String!): TokenType!
         addBook(token:String!,book:addBookInput!):ResponseBook
         updateBook(token:String!,book:addBookInput!):ResponseBook
         removeBook(token:String!,id:ID!):String
